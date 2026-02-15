@@ -85,45 +85,36 @@ The following evaluation metrics were calculated for each model:
 
 ## Observations About Model Performance
 
-| ML Model Name | Observation About Model Performance |
-|---------------|-------------------------------------|
-| Logistic Regression |  |
-| Decision Tree |  |
-| KNN |  |
-| Naive Bayes |  |
-| Random Forest (Ensemble) |  |
-| XGBoost (Ensemble) |  |
+1. **Logistic Regression** achieved the highest overall performance across almost all metrics, including Accuracy, AUC, F1 Score, and MCC. This suggests that the dataset is highly linearly separable.
+
+2. **KNN, Random Forest, and XGBoost** showed similar performance levels with strong AUC and F1 scores, demonstrating that ensemble and distance-based methods also handle this dataset effectively.
+
+3. **XGBoost** achieved a very high AUC score (0.990079), indicating strong class discrimination capability.
+
+4. **Random Forest** performed consistently across all metrics, confirming the stability advantage of ensemble methods.
+
+5. **Naive Bayes** performed reasonably well despite its strong independence assumption, but slightly underperformed compared to ensemble and linear models.
+
+6. **Decision Tree** showed the lowest performance among all models, likely due to overfitting and high variance when used as a single tree.
+
+7. The **MCC scores** confirm the same ranking pattern as Accuracy and F1 Score, indicating balanced predictive performance across classes.
 
 ---
 
 ## Conclusion
 
-The performance comparison of all six classification models demonstrates the strengths and weaknesses of different algorithms.
+Based on the evaluation metrics:
 
-Ensemble models such as Random Forest and XGBoost generally provide better generalization performance due to reduced variance and improved bias-variance tradeoff.
+- Logistic Regression is the best-performing model for this dataset.
+- Ensemble methods (Random Forest and XGBoost) also provide strong and stable performance.
+- The dataset appears to be highly linearly separable, which explains the excellent performance of Logistic Regression.
 
-The final model selection can be made based on:
+Therefore, Logistic Regression can be selected as the final recommended model for this classification task.
 
-- Highest Accuracy
-- Highest AUC
-- Highest MCC (best balanced metric)
-- Business requirement (precision vs recall trade-off)
-
----
-
-## Deployment
-
-The models have been deployed using **Streamlit** with the following features:
-
-- Dataset download option
-- Model selection dropdown
-- Evaluation metrics display
-- Confusion matrix visualization
-- Classification report
-- Model comparison dashboard
-
----
 
 ## Author
 
-BITS Machine Learning Assignment  
+Rohit Kumar 
+2025aa05867
+Sem -1 ( ML )
+M.Tech ( AI & ML )- BITS Pilani 
