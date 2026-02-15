@@ -100,6 +100,9 @@ st.write("Dataset Shape:", df.shape)
 # =====================================
 # MODEL EXECUTION
 # =====================================
+# =====================================
+# MODEL EXECUTION
+# =====================================
 if run:
 
     X = df.drop("target", axis=1)
@@ -117,16 +120,16 @@ if run:
     # OVERALL COMPARISON MODE
     # =========================================
     if model_name == "Overall Comparison":
+
         st.header("📊 Overall Model Comparison Dashboard")
 
-        models = 
-        {
-        "Logistic Regression": LogisticRegression(max_iter=5000),
-        "Decision Tree": DecisionTreeClassifier(max_depth=5),
-        "KNN": KNeighborsClassifier(n_neighbors=5),
-        "Naive Bayes": GaussianNB(),
-        "Random Forest (Ensemble)": RandomForestClassifier(n_estimators=100),
-        "XGBoost (Ensemble)": XGBClassifier(eval_metric='logloss')
+        models = {
+            "Logistic Regression": LogisticRegression(max_iter=5000),
+            "Decision Tree": DecisionTreeClassifier(max_depth=5),
+            "KNN": KNeighborsClassifier(n_neighbors=5),
+            "Naive Bayes": GaussianNB(),
+            "Random Forest (Ensemble)": RandomForestClassifier(n_estimators=100),
+            "XGBoost (Ensemble)": XGBClassifier(eval_metric='logloss')
         }
 
         results = []
@@ -137,50 +140,42 @@ if run:
             y_prob = model.predict_proba(X_test)[:, 1]
 
             results.append([
-            name,
-            accuracy_score(y_test, y_pred),
-            roc_auc_score(y_test, y_prob),
-            precision_score(y_test, y_pred),
-            recall_score(y_test, y_pred),
-            f1_score(y_test, y_pred),
-            matthews_corrcoef(y_test, y_pred)
+                name,
+                accuracy_score(y_test, y_pred),
+                roc_auc_score(y_test, y_prob),
+                precision_score(y_test, y_pred),
+                recall_score(y_test, y_pred),
+                f1_score(y_test, y_pred),
+                matthews_corrcoef(y_test, y_pred)
             ])
 
         comp_df = pd.DataFrame(
             results,
             columns=[
-            "ML Model Name",
-            "Accuracy",
-            "AUC",
-            "Precision",
-            "Recall",
-            "F1 Score",
-            "MCC"
+                "ML Model Name",
+                "Accuracy",
+                "AUC",
+                "Precision",
+                "Recall",
+                "F1 Score",
+                "MCC"
             ]
         )
 
         comp_df = comp_df.sort_values("Accuracy", ascending=False)
 
         st.subheader("📈 Complete Evaluation Comparison Table")
+        st.dataframe(comp_df.style.background_gradient(cmap="viridis"))
 
-        st.dataframe(
-        comp_df.style.background_gradient(cmap="viridis")
-        )
-
-        # Highlight Best Model
         best_model = comp_df.iloc[0]["ML Model Name"]
         st.success(f"🏆 Best Performing Model (Based on Accuracy): {best_model}")
 
-        # -----------------------------------
-        # VISUAL COMPARISON CHART
-        # -----------------------------------
         st.subheader("📊 Accuracy Comparison Chart")
 
-        fig, ax = plt.subplots(figsize=(8,5))
+        fig, ax = plt.subplots(figsize=(8, 5))
         sns.barplot(data=comp_df, x="Accuracy", y="ML Model Name", ax=ax)
         ax.set_title("Model Accuracy Comparison")
         st.pyplot(fig)
-
 
     # =========================================
     # SINGLE MODEL MODE
@@ -252,11 +247,11 @@ if run:
 
         # ROC Curve
         st.subheader("📈 ROC Curve")
-
         fpr, tpr, _ = roc_curve(y_test, y_prob)
+
         fig2, ax2 = plt.subplots()
         ax2.plot(fpr, tpr)
-        ax2.plot([0,1], [0,1], linestyle='--')
+        ax2.plot([0, 1], [0, 1], linestyle='--')
         ax2.set_xlabel("False Positive Rate")
         ax2.set_ylabel("True Positive Rate")
         st.pyplot(fig2)
@@ -267,21 +262,20 @@ if run:
         report_df = pd.DataFrame(report).transpose()
         st.dataframe(report_df)
 
-    # =====================================
-    # FEATURE IMPORTANCE (if applicable)
-    # =====================================
-    if model_name in ["Decision Tree", "Random Forest", "XGBoost"]:
-        st.subheader("🌟 Feature Importance")
+        # =====================================
+        # FEATURE IMPORTANCE (only for tree models)
+        # =====================================
+        if model_name in ["Decision Tree", "Random Forest", "XGBoost"]:
 
-        importance = model.feature_importances_
-        imp_df = pd.DataFrame({
-            "Feature": X.columns,
-            "Importance": importance
-        }).sort_values("Importance", ascending=False).head(10)
+            st.subheader("🌟 Feature Importance")
 
-        fig3, ax3 = plt.subplots()
-        sns.barplot(data=imp_df, x="Importance", y="Feature", ax=ax3)
-        st.pyplot(fig3)
+            importance = model.feature_importances_
+            imp_df = pd.DataFrame({
+                "Feature": X.columns,
+                "Importance": importance
+            }).sort_values("Importance", ascending=False).head(10)
 
-
+            fig3, ax3 = plt.subplots()
+            sns.barplot(data=imp_df, x="Importance", y="Feature", ax=ax3)
+            st.pyplot(fig3)
 
