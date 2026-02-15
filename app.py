@@ -117,9 +117,10 @@ if run:
     # OVERALL COMPARISON MODE
     # =========================================
     if model_name == "Overall Comparison":
-         st.header("📊 Overall Model Comparison Dashboard")
+        st.header("📊 Overall Model Comparison Dashboard")
 
-        models = {
+        models = 
+        {
         "Logistic Regression": LogisticRegression(max_iter=5000),
         "Decision Tree": DecisionTreeClassifier(max_depth=5),
         "KNN": KNeighborsClassifier(n_neighbors=5),
@@ -281,5 +282,6 @@ if run:
         fig3, ax3 = plt.subplots()
         sns.barplot(data=imp_df, x="Importance", y="Feature", ax=ax3)
         st.pyplot(fig3)
+
 
 
