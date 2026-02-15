@@ -69,14 +69,17 @@ The following evaluation metrics were calculated for each model:
 
 ## Model Comparison Table
 
+## Model Comparison Table
+
 | ML Model Name | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
-|---------------|----------|-----|-----------|--------|----------|-----|
-| Logistic Regression | 22 | 23 | 22 | 22 | 22 | 22 |
-| Decision Tree |  |  |  |  |  |  |
-| KNN |  |  |  |  |  |  |
-| Naive Bayes |  |  |  |  |  |  |
-| Random Forest (Ensemble) |  |  |  |  |  |  |
-| XGBoost (Ensemble) |  |  |  |  |  |  |
+|---------------|----------|-----|-----------|--------|----------|------|
+| Logistic Regression | 0.982456 | 0.995370 | 0.986111 | 0.986111 | 0.986111 | 0.962 |
+| KNN | 0.956140 | 0.978836 | 0.958904 | 0.972222 | 0.965517 | 0.905 |
+| XGBoost (Ensemble) | 0.956140 | 0.990079 | 0.946667 | 0.986111 | 0.965986 | 0.905 |
+| Random Forest (Ensemble) | 0.956140 | 0.990079 | 0.958904 | 0.972222 | 0.965517 | 0.905 |
+| Naive Bayes | 0.929825 | 0.986772 | 0.944444 | 0.944444 | 0.944444 | 0.849 |
+| Decision Tree | 0.903509 | 0.902116 | 0.955224 | 0.888889 | 0.920863 | 0.801 |
+
 
 ---
 
