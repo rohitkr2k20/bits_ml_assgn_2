@@ -31,8 +31,8 @@ from xgboost import XGBClassifier
 # =====================================
 # PAGE CONFIG
 # =====================================
-st.set_page_config(page_title="Premium ML Dashboard", layout="wide")
-st.title("🚀 Premium ML Classification Dashboard")
+st.set_page_config(page_title="ML Dashboard - BITS M.Tech Sem1 ML Assignment 2", layout="wide")
+st.title("🚀 ML Classification Dashboard")
 
 # =====================================
 # LOAD FIXED DATASET
@@ -267,3 +267,4 @@ if run:
         fig3, ax3 = plt.subplots()
         sns.barplot(data=imp_df, x="Importance", y="Feature", ax=ax3)
         st.pyplot(fig3)
+
