@@ -117,16 +117,15 @@ if run:
     # OVERALL COMPARISON MODE
     # =========================================
     if model_name == "Overall Comparison":
-
-        st.header("📊 Overall Model Comparison Dashboard")
+         st.header("📊 Overall Model Comparison Dashboard")
 
         models = {
-            "Logistic Regression": LogisticRegression(max_iter=5000),
-            "Decision Tree": DecisionTreeClassifier(max_depth=5),
-            "KNN": KNeighborsClassifier(n_neighbors=5),
-            "Naive Bayes": GaussianNB(),
-            "Random Forest": RandomForestClassifier(n_estimators=100),
-            "XGBoost": XGBClassifier(eval_metric='logloss')
+        "Logistic Regression": LogisticRegression(max_iter=5000),
+        "Decision Tree": DecisionTreeClassifier(max_depth=5),
+        "KNN": KNeighborsClassifier(n_neighbors=5),
+        "Naive Bayes": GaussianNB(),
+        "Random Forest (Ensemble)": RandomForestClassifier(n_estimators=100),
+        "XGBoost (Ensemble)": XGBClassifier(eval_metric='logloss')
         }
 
         results = []
@@ -137,35 +136,50 @@ if run:
             y_prob = model.predict_proba(X_test)[:, 1]
 
             results.append([
-                name,
-                accuracy_score(y_test, y_pred),
-                roc_auc_score(y_test, y_prob),
-                f1_score(y_test, y_pred),
-                matthews_corrcoef(y_test, y_pred)
+            name,
+            accuracy_score(y_test, y_pred),
+            roc_auc_score(y_test, y_prob),
+            precision_score(y_test, y_pred),
+            recall_score(y_test, y_pred),
+            f1_score(y_test, y_pred),
+            matthews_corrcoef(y_test, y_pred)
             ])
 
         comp_df = pd.DataFrame(
             results,
-            columns=["Model", "Accuracy", "AUC", "F1 Score", "MCC"]
+            columns=[
+            "ML Model Name",
+            "Accuracy",
+            "AUC",
+            "Precision",
+            "Recall",
+            "F1 Score",
+            "MCC"
+            ]
         )
 
         comp_df = comp_df.sort_values("Accuracy", ascending=False)
 
-        st.subheader("📈 Performance Table")
+        st.subheader("📈 Complete Evaluation Comparison Table")
+
         st.dataframe(
-            comp_df.style.background_gradient(cmap="viridis")
+        comp_df.style.background_gradient(cmap="viridis")
         )
 
         # Highlight Best Model
-        best_model = comp_df.iloc[0]["Model"]
-        st.success(f"🏆 Best Performing Model: {best_model}")
+        best_model = comp_df.iloc[0]["ML Model Name"]
+        st.success(f"🏆 Best Performing Model (Based on Accuracy): {best_model}")
 
-        # Bar Chart Comparison
-        st.subheader("📊 Accuracy Comparison")
+        # -----------------------------------
+        # VISUAL COMPARISON CHART
+        # -----------------------------------
+        st.subheader("📊 Accuracy Comparison Chart")
 
-        fig, ax = plt.subplots()
-        sns.barplot(data=comp_df, x="Accuracy", y="Model", ax=ax)
+        fig, ax = plt.subplots(figsize=(8,5))
+        sns.barplot(data=comp_df, x="Accuracy", y="ML Model Name", ax=ax)
+        ax.set_title("Model Accuracy Comparison")
         st.pyplot(fig)
+
 
     # =========================================
     # SINGLE MODEL MODE
@@ -267,4 +281,5 @@ if run:
         fig3, ax3 = plt.subplots()
         sns.barplot(data=imp_df, x="Importance", y="Feature", ax=ax3)
         st.pyplot(fig3)
+
 
